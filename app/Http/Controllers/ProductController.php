@@ -30,6 +30,7 @@ class ProductController extends Controller
             'description' => 'required',
             'prix' => 'required',
             'image' => 'required',
+            'id_categorie' => 'required',
         ]);
 
         $product = Product::create($fields);

@@ -18,8 +18,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'phone',
+        'gender',
+        'image',
+        'birth_date',
+        'id_role',
+        'email_verified_at',
         'password',
     ];
 
@@ -41,4 +48,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function mapper($user)
+    {
+        $this->id = $user->id;
+        $this->first_name = $user->first_name;
+        $this->last_name = $user->last_name;
+        $this->email = $user->email;
+        $this->phone = $user->phone;
+        $this->gender = $user->gender;
+        $this->image = $user->image;
+        $this->birth_date = $user->birth_date;
+        $this->id_role = $user->id_role;
+    }
 }
