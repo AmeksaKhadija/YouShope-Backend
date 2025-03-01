@@ -50,8 +50,10 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-
-        return $product;
+        if (!$product) {
+            return response()->json(['error' => 'Product not found.'], 404);
+        }
+        return response()->json($product);
     }
 
     /**
@@ -99,4 +101,9 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(['message' => 'produit supprimée avec succès']);
     }
+
+
+    // public function test(Request $request){
+    //     return response()->json($request);
+    // }
 }

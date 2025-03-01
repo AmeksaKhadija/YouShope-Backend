@@ -14,6 +14,7 @@ class CategorieController extends Controller
      */
     public function index()
     {
+        
         return Categorie::all();
     }
 
@@ -57,8 +58,10 @@ class CategorieController extends Controller
     public function show($id)
     {
         $categorie = Categorie::find($id);
-
-        return $categorie;
+        if (!$categorie) {
+            return response()->json(['error' => 'category not found.'], 404);
+        }
+        return response()->json($categorie);
     }
 
     /**
