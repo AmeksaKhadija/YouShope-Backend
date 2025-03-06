@@ -25,20 +25,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $fields = $request->validate([
             'titre' => 'required',
             'description' => 'required',
-            'prix' => 'required',
+            'prix' => 'required|numeric',
             'image' => 'required',
             'id_categorie' => 'required',
         ]);
+        if (!$fields) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $fields->message(),
+            ], 422);
+        } else {
 
-        $product = Product::create($fields);
+            $product = Product::create($fields);
 
-        return response()->json([
-            'message' => 'produit ajoutée avec succès',
-            'product' => $product
-        ]);
+            return response()->json([
+                'message' => 'produit ajoutée avec succès',
+                'product' => $product
+            ], 200);
+        }
     }
 
     /**
@@ -76,10 +84,11 @@ class ProductController extends Controller
             'description' => 'required',
             'prix' => 'required',
             'image' => 'required',
+            'id_categorie' => 'required',
         ]);
 
         $product->update($fields);
-        
+
         return response()->json([
             'message' => 'produit mise à jour avec succès',
             'product' => $product

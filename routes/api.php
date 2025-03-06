@@ -37,8 +37,8 @@ Route::apiResource('categories',CategorieController::class);
 // Route::get('test',[ProductController::class,'test']);
 
 // addToCart
-Route::post('cart',[CartController::class,'storeInSession']);
-Route::get('cart',[CartController::class,'getCart']);
-Route::delete('cart/remove/{product_id}',[CartController::class,'removeFromCart']);
-Route::delete('cart/clear',[CartController::class,'clearCart']);
+Route::middleware('auth:sanctum')->post('cart',[CartController::class,'storeInSession']);
+Route::middleware('auth:sanctum')->get('cart',[CartController::class,'getCart']);
+Route::middleware('auth:sanctum')->delete('cart/remove/{product_id}',[CartController::class,'removeFromCart']);
+Route::middleware('auth:sanctum')->delete('cart/clear',[CartController::class,'clearCart']);
  

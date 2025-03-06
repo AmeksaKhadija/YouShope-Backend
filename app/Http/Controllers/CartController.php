@@ -6,6 +6,7 @@ use App\Http\Requests\CartRequest;
 use App\Models\Product;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -14,14 +15,8 @@ class CartController extends Controller
      */
     public function storeInSession(CartRequest $request)
     {
-        // dd(auth()->user());
-        dd(Auth::user());
+        // dd(Auth::user());
 
-        // if ($errors = $request->errors()) {
-        //     dd($errors);
-        // }
-
-        
         $user = $request->user();
 
         if (!$user) {
@@ -51,20 +46,19 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-
+        session()->save();
         return response()->json([
             'message' => 'Produit ajouté au panier',
             'cart' => session('cart')
         ], 200);
     }
 
-    /**
-     * Récupérer les articles du panier
-     */
+
     public function getCart()
     {
+        // dd(session()->all());
         return response()->json([
-            'cart' => session('cart', [])
+            'cart' => session()->get('cart', [])
         ]);
     }
 
@@ -75,9 +69,8 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$product_id])) {
-            unset($cart[$product_id]);
-            session()->put('cart', $cart);
+        if (isset($cart['items'][$product_id])) {
+            unset($cart['items'][$product_id]);
         }
 
         return response()->json([
