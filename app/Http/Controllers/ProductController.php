@@ -61,9 +61,19 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json(['error' => 'Product not found.'], 404);
         }
-        return response()->json($product);
+        return response()->json([
+            'product' => $product
+        ]);
     }
 
+    public function edit($id)
+    {
+        $product = Product::find($id);
+        return response()->json([
+            'message' => 'produit avec id ' . $id . ' est:',
+            'product' => $product
+        ]);
+    }
     /**
      * Update the specified resource in storage.
      *

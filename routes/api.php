@@ -31,7 +31,15 @@ Route::post('register',[RegisterController::class,'register']);
 Route::post('login',[LoginController::class,'login']);
 
 // crud des produits et categories
-Route::apiResource('products',ProductController::class);
+// Route::apiResource('products',ProductController::class);
+Route::get('products',[ProductController::class,'index']);
+Route::post('products',[ProductController::class,'store']);
+Route::get('products/{id}',[ProductController::class,'show']);
+Route::get('products/{id}',[ProductController::class,'edit']);
+Route::put('products/{id}',[ProductController::class,'update']);
+Route::delete('products/{id}',[ProductController::class,'destroy']);
+
+
 Route::apiResource('categories',CategorieController::class);
 
 // Route::get('test',[ProductController::class,'test']);
